@@ -22,17 +22,6 @@ class StudentResource extends JsonResource
 
             'status' => $this->status,
 
-            'user' => [
-
-                'id' => $this->user?->id,
-
-                'name' => $this->user?->name,
-
-                'email' => $this->user?->email,
-
-                'role' => $this->user?->role,
-            ],
-
             'createdAt' => $this->created_at,
 
             'updatedAt' => $this->updated_at,

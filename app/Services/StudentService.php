@@ -12,13 +12,18 @@ class StudentService implements StudentServiceInterface
 {
     public function getAll(): LengthAwarePaginator
     {
-        return Student::query()
+        $data = Student::query()
             ->with([
-                'user',
-                'section.class.academicSession',
+
+                'studentSessions.academicSession',
+                'studentSessions.academicClass',
             ])
             ->latest()
             ->paginate(20);
+        // dd($data);
+
+        return $data;
+
     }
 
     public function getById(int $id): Student
@@ -26,7 +31,8 @@ class StudentService implements StudentServiceInterface
         return Student::query()
             ->with([
                 'user',
-                'section.class.academicSession',
+                'studentSessions.academicSession',
+                'studentSessions.academicClass',
             ])
             ->findOrFail($id);
     }
@@ -52,7 +58,6 @@ class StudentService implements StudentServiceInterface
         int $id,
         array $data
     ): Student {
-
         $student = Student::findOrFail($id);
 
         if (isset($data['user_id'])) {
@@ -74,14 +79,14 @@ class StudentService implements StudentServiceInterface
 
         return $student->fresh()->load([
             'user',
-            'section.class.academicSession',
+            'studentSessions.academicSession',
+            'studentSessions.academicClass',
         ]);
     }
 
     public function delete(int $id): bool
     {
-        $student = Student::findOrFail($id);
-
-        return $student->delete();
+        return Student::findOrFail($id)
+            ->delete();
     }
 }
