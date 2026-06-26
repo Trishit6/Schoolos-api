@@ -21,17 +21,15 @@ class AcademicSessionController extends Controller
         AcademicSessionRequest $request
     ): JsonResponse {
 
-        if ($request->boolean('is_active')) {
+        $data = $request->validated();
 
-            AcademicSession::query()
-                ->update([
-                    'is_active' => false,
-                ]);
+        if (($data['is_active'] ?? false) === true) {
+            AcademicSession::query()->update([
+                'is_active' => false,
+            ]);
         }
 
-        $session = AcademicSession::create(
-            $request->validated()
-        );
+        $session = AcademicSession::create($data);
 
         return response()->json([
             'message' => 'Academic Session Created Successfully',
@@ -43,9 +41,7 @@ class AcademicSessionController extends Controller
     {
         $session = AcademicSession::findOrFail($id);
 
-        return new AcademicSessionResource(
-            $session
-        );
+        return new AcademicSessionResource($session);
     }
 
     public function update(
@@ -53,21 +49,19 @@ class AcademicSessionController extends Controller
         int $id
     ): JsonResponse {
 
-        $session = AcademicSession::findOrFail(
-            $id
-        );
+        $session = AcademicSession::findOrFail($id);
 
-        if ($request->boolean('is_active')) {
+        $data = $request->validated();
 
+        if (($data['is_active'] ?? false) === true) {
             AcademicSession::query()
+                ->where('id', '!=', $id)
                 ->update([
                     'is_active' => false,
                 ]);
         }
 
-        $session->update(
-            $request->validated()
-        );
+        $session->update($data);
 
         return response()->json([
             'message' => 'Academic Session Updated Successfully',
@@ -81,9 +75,7 @@ class AcademicSessionController extends Controller
         int $id
     ): JsonResponse {
 
-        $session = AcademicSession::findOrFail(
-            $id
-        );
+        $session = AcademicSession::findOrFail($id);
 
         $session->delete();
 
@@ -96,21 +88,18 @@ class AcademicSessionController extends Controller
         int $id
     ): JsonResponse {
 
-        AcademicSession::query()
-            ->update([
-                'is_active' => false,
-            ]);
+        AcademicSession::query()->update([
+            'is_active' => false,
+        ]);
 
-        $session = AcademicSession::findOrFail(
-            $id
-        );
+        $session = AcademicSession::findOrFail($id);
 
         $session->update([
             'is_active' => true,
         ]);
 
         return response()->json([
-            'message' => 'Academic Session Activated',
+            'message' => 'Academic Session Activated Successfully',
             'data' => new AcademicSessionResource(
                 $session->fresh()
             ),

@@ -41,7 +41,7 @@ class AcademicSessionRequest extends FormRequest
                 'after:start_date',
             ],
 
-            'isCurrent' => [
+            'is_active' => [
                 'nullable',
                 'boolean',
             ],
