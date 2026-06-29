@@ -7,27 +7,21 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class AcademicClassResource extends JsonResource
 {
-    public function toArray(
-        Request $request
-    ): array {
+    public function toArray(Request $request): array
+    {
         return [
 
             'id' => $this->id,
 
-            'academicSessionId' => $this->academic_session_id,
-
-            'academicStandardId' => $this->academic_standard_id,
-
             'name' => $this->name,
+
+            'code' => $this->code,
 
             'capacity' => $this->capacity,
 
             'status' => $this->status,
 
-            'academicSession' => [
-                'id' => $this->academicSession?->id,
-                'name' => $this->academicSession?->name,
-            ],
+            'academicStandardId' => $this->academic_standard_id,
 
             'academicStandard' => [
                 'id' => $this->academicStandard?->id,

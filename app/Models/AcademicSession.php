@@ -24,9 +24,6 @@ class AcademicSession extends Model
         'is_active' => 'boolean',
     ];
 
-    /**
-     * Optional: expose frontend-friendly field
-     */
     protected $appends = [
         'is_current',
     ];
@@ -35,8 +32,4 @@ class AcademicSession extends Model
     {
         return $this->is_active;
     }
-
-    /**
-     * Classes Relationship
-     */
 }

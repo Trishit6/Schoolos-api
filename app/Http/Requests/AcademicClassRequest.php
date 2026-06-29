@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AcademicClassRequest extends FormRequest
 {
@@ -13,16 +14,9 @@ class AcademicClassRequest extends FormRequest
 
     public function rules(): array
     {
-        $id = $this->route(
-            'academic_class'
-        );
+        $academicClass = $this->route('academic_class');
 
         return [
-
-            'academic_session_id' => [
-                'required',
-                'exists:academic_sessions,id',
-            ],
 
             'academic_standard_id' => [
                 'required',
@@ -32,7 +26,22 @@ class AcademicClassRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:50',
+                'max:100',
+
+                Rule::unique('academic_classes')
+                    ->where(fn ($query) => $query->where(
+                        'academic_standard_id',
+                        $this->academic_standard_id
+                    ))
+                    ->ignore($academicClass),
+            ],
+
+            'code' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('academic_classes')
+                    ->ignore($academicClass),
             ],
 
             'capacity' => [
@@ -42,7 +51,7 @@ class AcademicClassRequest extends FormRequest
             ],
 
             'status' => [
-                'nullable',
+                'required',
                 'boolean',
             ],
         ];

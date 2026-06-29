@@ -10,9 +10,9 @@ class AcademicClass extends Model
     use HasFactory;
 
     protected $fillable = [
-        'academic_session_id',
         'academic_standard_id',
         'name',
+        'code',
         'capacity',
         'status',
     ];
@@ -21,24 +21,13 @@ class AcademicClass extends Model
         'status' => 'boolean',
     ];
 
-    public function academicSession()
-    {
-        return $this->belongsTo(
-            AcademicSession::class
-        );
-    }
-
     public function academicStandard()
     {
-        return $this->belongsTo(
-            AcademicStandard::class
-        );
+        return $this->belongsTo(AcademicStandard::class);
     }
 
     public function studentSessions()
     {
-        return $this->hasMany(
-            StudentSession::class
-        );
+        return $this->hasMany(StudentSession::class);
     }
 }

@@ -12,36 +12,29 @@ return new class extends Migration
 
             $table->id();
 
-            $table->foreignId('academic_session_id')
-                ->constrained('academic_sessions')
-                ->cascadeOnDelete();
-
             $table->foreignId('academic_standard_id')
-                ->constrained('academic_standards')
+                ->constrained()
                 ->cascadeOnDelete();
 
             $table->string('name');
 
-            $table->unsignedInteger('capacity')
-                ->default(50);
+            $table->string('code')->unique();
 
-            $table->boolean('status')
-                ->default(true);
+            $table->unsignedInteger('capacity')->default(50);
+
+            $table->boolean('status')->default(true);
 
             $table->timestamps();
 
             $table->unique([
-                'academic_session_id',
                 'academic_standard_id',
                 'name',
-            ], 'academic_class_unique');
+            ]);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists(
-            'academic_classes'
-        );
+        Schema::dropIfExists('academic_classes');
     }
 };
