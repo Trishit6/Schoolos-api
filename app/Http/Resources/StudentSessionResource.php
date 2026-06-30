@@ -7,11 +7,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentSessionResource extends JsonResource
 {
-    public function toArray(
-        Request $request
-    ): array {
+    public function toArray(Request $request): array
+    {
         return [
-
             'id' => $this->id,
 
             'studentId' => $this->student_id,
@@ -24,24 +22,24 @@ class StudentSessionResource extends JsonResource
 
             'status' => $this->status,
 
-            'student' => [
-                'id' => $this->student?->id,
-
-                'admissionNo' => $this->student?->admission_no,
-
-                'name' => $this->student?->user?->name,
-            ],
+            'student' => new StudentResource(
+                $this->whenLoaded('student')
+            ),
 
             'academicSession' => [
                 'id' => $this->academicSession?->id,
-
                 'name' => $this->academicSession?->name,
             ],
 
             'academicClass' => [
                 'id' => $this->academicClass?->id,
-
                 'name' => $this->academicClass?->name,
+                'code' => $this->academicClass?->code,
+
+                'academicStandard' => [
+                    'id' => $this->academicClass?->academicStandard?->id,
+                    'name' => $this->academicClass?->academicStandard?->name,
+                ],
             ],
 
             'createdAt' => $this->created_at,

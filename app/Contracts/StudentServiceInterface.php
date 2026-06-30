@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 interface StudentServiceInterface
 {
     public function getAll();

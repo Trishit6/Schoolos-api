@@ -5,6 +5,7 @@ namespace App\Services\Auth;
 use App\Contracts\Auth\AuthServiceInterface;
 use App\Models\User;
 
+use App\Models\Student;
 class AuthService implements AuthServiceInterface
 {
     public function register(array $data): User

@@ -1,3 +1,6 @@
+use App\Models\User;
+use App\Models\StudentSession;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -12,15 +15,12 @@ return new class extends Migration
 
             $table->id();
 
-            $table->foreignId('user_id')
-                ->unique()
-                ->constrained('users')
-                ->cascadeOnDelete();
+            $table->string('name');
 
-            $table->string('admission_no')
+            $table->date('dateOfBirth');
+
+            $table->string('guardianName')
                 ->unique();
-
-            $table->date('admission_date');
 
             $table->boolean('status')
                 ->default(true);

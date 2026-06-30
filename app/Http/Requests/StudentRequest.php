@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class StudentRequest extends FormRequest
 {
@@ -20,45 +18,21 @@ class StudentRequest extends FormRequest
         );
 
         return [
-
-            'user_id' => [
+            'name' => [
                 'required',
-                'exists:users,id',
-
-                function (
-                    string $attribute,
-                    mixed $value,
-                    \Closure $fail
-                ) {
-
-                    $user = User::find(
-                        $value
-                    );
-
-                    if (
-                        ! $user ||
-                        $user->role !== 'student'
-                    ) {
-                        $fail(
-                            'Selected user is not a student.'
-                        );
-                    }
-                },
+                'string',
+                'max:255',
             ],
 
-            'admission_no' => [
-
-                'required',
-
-                Rule::unique(
-                    'students',
-                    'admission_no'
-                )->ignore($id),
-            ],
-
-            'admission_date' => [
+            'dateOfBirth' => [
                 'required',
                 'date',
+            ],
+
+            'guardianName' => [
+                'required',
+                'string',
+                'max:255',
             ],
 
             'status' => [

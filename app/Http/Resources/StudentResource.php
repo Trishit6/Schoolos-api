@@ -14,11 +14,11 @@ class StudentResource extends JsonResource
 
             'id' => $this->id,
 
-            'userId' => $this->user_id,
+            'name' => $this->name,
 
-            'admissionNo' => $this->admission_no,
+            'dateOfBirth' => $this->dateOfBirth,
 
-            'admissionDate' => $this->admission_date,
+            'guardianName' => $this->guardianName,
 
             'status' => $this->status,
 

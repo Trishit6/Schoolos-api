@@ -39,17 +39,6 @@ class StudentService implements StudentServiceInterface
 
     public function create(array $data): Student
     {
-        $user = User::findOrFail(
-            $data['user_id']
-        );
-
-        if ($user->role !== 'student') {
-            throw ValidationException::withMessages([
-                'user_id' => [
-                    'Selected user is not a student.',
-                ],
-            ]);
-        }
 
         return Student::create($data);
     }

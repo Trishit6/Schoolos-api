@@ -8,6 +8,9 @@ use App\Http\Requests\StudentRequest;
 use App\Http\Resources\StudentResource;
 use Illuminate\Http\JsonResponse;
 
+use App\Models\User;
+use App\Models\StudentSession;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class StudentController extends Controller
 {
     public function __construct(
